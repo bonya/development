@@ -1,0 +1,15 @@
+[submodule "ml-api"]
+	path = ml-api
+	url = https://github.com/bonya/ml-api.git
+[submodule "rest-api"]
+	path = rest-api
+	url = https://github.com/bonya/rest-api.git
+[submodule "web-app"]
+	path = web-app
+	url = https://github.com/bonya/web-app.git
+[submodule "game-app"]
+	path = game-app
+	url = https://github.com/bonya/game-app.git
+[submodule "admin-app"]
+	path = admin-app
+	url = https://github.com/bonya/admin-app.git

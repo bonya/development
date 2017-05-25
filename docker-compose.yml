@@ -16,8 +16,6 @@ services:
           - 5000:5000
         environment:
           - APP_PORT=5000
-        links:
-          - db:db
 
     rest-api:
         build: ./rest-api
@@ -29,10 +27,17 @@ services:
           - POSTGRES_PASSWORD=ludacity
           - POSTGRES_DB=ludacity
           - POSTGRES_HOST=db
+          - ML_API_HOST=ml-api
         links:
           - db:db
+          - ml-api:ml-api
         depends_on:
           - db
+
+    ml-api:
+        build: ./ml-api
+        ports:
+          - 5015:5015
 
     admin-app:
         build: ./admin-app
