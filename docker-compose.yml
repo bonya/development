@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+    db:
+        image: postgres
+        environment:
+          - POSTGRES_USER=ludacity
+          - POSTGRES_PASSWORD=ludacity
+          - POSTGRES_DB=ludacity
+        ports:
+          - 5432:5432
+
+    web-app:
+        build: ./web-app
+        ports:
+          - 5000:5000
+        environment:
+          - APP_PORT=5000
+        links:
+          - db:db
+
+    rest-api:
+        build: ./rest-api
+        ports:
+          - 5005:5005
+        environment:
+          - APP_PORT=5005
+          - POSTGRES_USER=ludacity
+          - POSTGRES_PASSWORD=ludacity
+          - POSTGRES_DB=ludacity
+          - POSTGRES_HOST=db
+        links:
+          - db:db
+        depends_on:
+          - db
+
+    admin-app:
+        build: ./admin-app
+        ports:
+          - 5010:5010
+        environment:
+          - APP_PORT=5010
