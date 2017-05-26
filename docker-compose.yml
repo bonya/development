@@ -1,47 +1,70 @@
 version: '3'
 services:
 
-    db:
-        image: postgres
-        environment:
-          - POSTGRES_USER=ludacity
-          - POSTGRES_PASSWORD=ludacity
-          - POSTGRES_DB=ludacity
-        ports:
-          - 5432:5432
+  # db:
+  #   image: postgres
+  #   environment:
+  #     - POSTGRES_USER=ludacity
+  #     - POSTGRES_PASSWORD=ludacity
+  #     - POSTGRES_DB=ludacity
+  #   ports:
+  #     - '5432:5432'
 
-    web-app:
-        build: ./web-app
-        ports:
-          - 5000:5000
-        environment:
-          - APP_PORT=5000
+  # game-app:
+  #   build: ./game-app
+  #   expose:
+  #     - '5000'
+  #   ports:
+  #     - '5000:5000'
+  #   environment:
+  #     - APP_PORT=5000
 
-    rest-api:
-        build: ./rest-api
-        ports:
-          - 5005:5005
-        environment:
-          - APP_PORT=5005
-          - POSTGRES_USER=ludacity
-          - POSTGRES_PASSWORD=ludacity
-          - POSTGRES_DB=ludacity
-          - POSTGRES_HOST=db
-          - ML_API_HOST=ml-api
-        links:
-          - db:db
-          - ml-api:ml-api
-        depends_on:
-          - db
+  # web-app:
+  #   build: ./web-app
+  #   expose:
+  #     - '5005'
+  #   ports:
+  #     - '5005:5005'
+  #   environment:
+  #     - APP_PORT=5000
 
-    ml-api:
-        build: ./ml-api
-        ports:
-          - 5015:5015
+  # admin-app:
+  #   build: ./admin-app
+  #   expose:
+  #     - '5010'
+  #   ports:
+  #     - '5010:5010'
+  #   environment:
+  #     - APP_PORT=5010
 
-    admin-app:
-        build: ./admin-app
-        ports:
-          - 5010:5010
-        environment:
-          - APP_PORT=5010
+  # rest-api:
+  #   build: ./rest-api
+  #   expose:
+  #     - '5015'
+  #   ports:
+  #     - '5015:5015'
+  #   environment:
+  #     - APP_PORT=5005
+  #     - POSTGRES_USER=ludacity
+  #     - POSTGRES_PASSWORD=ludacity
+  #     - POSTGRES_DB=ludacity
+  #     - POSTGRES_HOST=db
+  #     - ML_API_HOST=ml-api
+  #   links:
+  #     - db:db
+  #     - ml-api:ml-api
+  #   depends_on:
+  #     - db
+
+  ml-api:
+    build: ./ml-api
+    expose:
+      - '5020'
+    ports:
+      - '5020:5020'
+    environment:
+      - APP_PORT=5020
+      - DEBUG=TRUE
+    volumes:
+      - ./ml-api:/usr/src/app
+    command: python app.py
